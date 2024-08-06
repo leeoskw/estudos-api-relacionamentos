@@ -1,6 +1,7 @@
 
 using estudos_api_relacionamentos.DataContext;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 namespace estudos_api_relacionamentos
 {
@@ -19,6 +20,13 @@ namespace estudos_api_relacionamentos
 
             ConfiguraBd(builder.Services, builder.Configuration);
 
+            // possibilita "ciclo de referência" no entity framewok
+            builder.Services.AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+                options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+            });
 
             var app = builder.Build();
 
