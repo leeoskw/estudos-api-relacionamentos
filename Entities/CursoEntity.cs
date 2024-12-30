@@ -9,6 +9,6 @@
     // navegação
         public int ProfessorId { get; set; } // N:1
         public ProfessorEntity Professor { get; set; }
-        public ICollection<AlunoCursoEntity> EstudanteCurso { get; set; } // N:N
+        public ICollection<AlunoCursoEntity> AlunoCurso { get; set; } // N:N
     }
 }

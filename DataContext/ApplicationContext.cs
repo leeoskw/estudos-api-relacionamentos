@@ -10,11 +10,11 @@ namespace estudos_api_relacionamentos.DataContext
         public DbSet<CategoriaEntity> Categorias { get; set; }
 
 
-        public DbSet<AlunoEntity> Estudantes { get; set; }
+        public DbSet<AlunoEntity> Alunos { get; set; }
         public DbSet<EnderecoEntity> Enderecos { get; set; }
         public DbSet<CursoEntity> Cursos { get; set; }
         public DbSet<ProfessorEntity> Professores { get; set; }
-        public DbSet<AlunoCursoEntity> EstudantesCursos { get; set; }
+        public DbSet<AlunoCursoEntity> AlunosCursos { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
@@ -24,7 +24,7 @@ namespace estudos_api_relacionamentos.DataContext
         {
             // chaves primárias
             modelBuilder.Entity<AlunoCursoEntity>()
-                .HasKey(ec => new { ec.EstudanteId, ec.CursoId});
+                .HasKey(ec => new { ec.AlunoId, ec.CursoId});
 
             // Relação N:1 entre Livro e Categoria
 
@@ -34,18 +34,18 @@ namespace estudos_api_relacionamentos.DataContext
                 .HasForeignKey(l => l.CategoriaId);
 
 
-            // Tabela intermediária a partir de uma relação N:N entre Estudante e Curso.
-            // Fazendo o lado 'Um estudante tem vários EstudanteCurso'
+            // Tabela intermediária a partir de uma relação N:N entre Aluno e Curso.
+            // Fazendo o lado 'Um aluno tem vários AlunoCurso'
             
             modelBuilder.Entity<AlunoCursoEntity>()
-                .HasOne(e => e.Estudante)
+                .HasOne(e => e.Aluno)
                 .WithMany(ec => ec.AlunoCurso)
-                .HasForeignKey(e => e.EstudanteId);
+                .HasForeignKey(e => e.AlunoId);
 
-            // Fazendo o outro lado 'Um curso tem vários EstudanteCurso'
+            // Fazendo o outro lado 'Um curso tem vários AlunoCurso'
             modelBuilder.Entity<AlunoCursoEntity>()
                 .HasOne(c => c.Curso)
-                .WithMany(ec => ec.EstudanteCurso)
+                .WithMany(ec => ec.AlunoCurso)
                 .HasForeignKey(c => c.CursoId);
 
             
