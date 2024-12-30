@@ -1,4 +1,6 @@
 
+using estudos_api_relacionamentos.Data.Repositories;
+using estudos_api_relacionamentos.Data.UnitOfWork;
 using estudos_api_relacionamentos.DataContext;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
@@ -17,6 +19,10 @@ namespace estudos_api_relacionamentos
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            // injeção de dependência
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped(typeof(IRepositoryGenerico<>), typeof(RepositoryGenerico<>));
 
             ConfiguraBd(builder.Services, builder.Configuration);
 
